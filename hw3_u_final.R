@@ -57,13 +57,6 @@ la.joined.data <- left_join(la.joined.data,
                             per.capita.personal.income,
                             by = c("DATE"))
 la.joined.data <- la.joined.data[-c(9), ] 
-# 
-# la.joined.data %>%
-#   ggplot(aes(x = DATE,
-#              y = Median_Age)) + 
-#   geom_point(aes(size = Population,
-#                  color = Education))
-
 
 #### R Shiny App
 
@@ -124,15 +117,6 @@ la.cities.long.lat.joined.2 <- la.cities.long.lat.joined %>%
 la.cities.long.lat.joined.2$population <- 
   as.character(la.cities.long.lat.joined.2$population)
 
-#make a state map of the zip code
-# ca.cities.long.lat %>%
-#   leaflet() %>%
-#   addTiles() %>%
-#   addCircleMarkers(lat = ~latitude,
-#                    lng = ~longitude,
-#                    clusterOptions = markerClusterOptions(),
-#                    label = ~zipcode)
-
 la.cities.long.lat.joined.3 <- la.cities.long.lat.joined.2
 la.cities.long.lat.joined.3$zipcode <- as.character(la.cities.long.lat.joined.3$zipcode)
 la.cities.long.lat.joined.3$population <- as.numeric(la.cities.long.lat.joined.3$population)
@@ -154,28 +138,6 @@ la.millenial.pop <- la.cities.long.lat.joined.3 %>%
                                  "marriage stats?", "<br>",
                                  "avg cost of living"), #pop needs to be a string to show
                    label = ~la.cities.long.lat.joined.3$zipcode) #zipcode also needs to be a string
-# 
-# la.cities.long.lat.joined.3 %>%
-#   mutate(is.selected.city = 
-#            ifelse(la.cities.long.lat.joined.3$city.x == "Rosamond",
-#                   "city",
-#                   "not.city")) %>%
-#   filter(is.selected.city == "city") %>%
-#   leaflet() %>%
-#   addTiles() %>%
-#   addCircleMarkers(lat = ~latitude,
-#                    lng = ~longitude,
-#                    clusterOptions = markerClusterOptions(),
-#                    popup = paste(city.x, "<br>",
-#                                  "population of millenials:", as.character(~population), "<br>",
-#                                  "median age:", as.character(~age), "<br>",
-#                                  "avg household size:", as.character(~household_size), "<br>",
-#                                  "avg education level?", "<br>",
-#                                  "avg income?", "<br>",
-#                                  "# of public schools?", "<br>",
-#                   "marriage stats?", "<br>",
-#                   "avg cost of living"), #pop needs to be a string to show
-#          label = as.character(~zipcode))
 
 #Gender dataset and graph
 la.cities.pie <- la.cities.long.lat.joined.3
@@ -203,11 +165,6 @@ data.new <- reshape(gender.list,
                     direction = "long")
 
 colors <- c("pink", "skyblue")
-# data.new %>%
-#   filter(city == "Alhambra") %>%
-#   ggplot(aes(x=gen, y=gender)) + geom_bar(stat="identity", fill = colors) + 
-#   labs(x="gender", y="number")
-# 
 
 #education and income dataset
 income.race <- read_csv("income_race.csv")
@@ -229,16 +186,6 @@ new.edu <- reshape(edu,
                    direction = "long")
 
 colorsedu <- c("red", "skyblue", "yellow")
-# new.edu %>%
-#   filter(GEO_NAME == "Alhambra") %>%
-#   ggplot(aes(x=edu, y=education)) + geom_bar(stat="identity", fill = colorsedu) + 
-#   labs(x="education", y="number")
-
-#how can I change the color of the popup to reflect population?
-
-#make an app that'll zoom into the zip codes in the selected city 
-#will show population of millenials in the popup
-#what other facts can I code into the popup??
 
 city.choices <- sort(unique(la.cities.long.lat.joined.3$city.x))
 gender.choices <- c("female-heavy", "male-heavy", "more or less equal (5% error)")
@@ -316,9 +263,6 @@ server <- function(input, output, session) {
                                      "number of males", input.city$males, "<br>",
                                      "number of females", input.city$females, "<br>"), #pop needs to be a string to show
                        label = input.city$zipcode)
-    
-## how to get rid of 318 zipcodes?
-   
   })
   
   output$la.millenials.graph <- renderPlot({
@@ -366,7 +310,6 @@ server <- function(input, output, session) {
       ggtitle("Median Age, Population, and Education in LA over time") + 
       xlab("Year") +
       ylab("Median Age") 
-    
   })
   
   output$warning <- renderText(
