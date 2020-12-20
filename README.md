@@ -8,7 +8,3 @@ The county of Los Angeles has become populated due to its rising popularity amon
 - "The Annual Trend" illustrates an animated graph of annual trend of population and education, between 2009 and 2015. 
 
 - Using with Leaflet package, the map in the "Your Unique City" section visually locates your preferred city, with population of millenials, median age, average household size, and number of males and females, all in one text box. 
-
-## Final Product
-Access the shinyApp, using the following link: 
-https://keunyoungko.shinyapps.io/millennial_trend_los_angeles/
